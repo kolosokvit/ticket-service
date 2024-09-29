@@ -1,5 +1,7 @@
 package ticket;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
@@ -13,13 +15,14 @@ public class Ticket {
     private String stadiumSector;
     private double maxAllowedBackpackWeightInKg;
     private final LocalDateTime ticketCreationTime;
+    private BigDecimal price;
 
     public Ticket() {
 
         ticketCreationTime = LocalDateTime.now();
     }
 
-    public Ticket(String id, String concertHall, String eventCode, long time, boolean isPromo, String stadiumSector, double maxAllowedBackpackWeightInKg) {
+    public Ticket(String id, String concertHall, String eventCode, long time, boolean isPromo, String stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
         if (id.length() > 4) {
             throw new IllegalArgumentException("ID length must be 4 or less");
         } else {
@@ -44,6 +47,7 @@ public class Ticket {
         }
         DecimalFormat decimalFormat = new DecimalFormat("#.###");
         this.maxAllowedBackpackWeightInKg = Double.parseDouble(decimalFormat.format(maxAllowedBackpackWeightInKg));
+        price = new BigDecimal(ticketPrice).setScale(2, RoundingMode.HALF_UP);
         ticketCreationTime = LocalDateTime.now();
     }
 
@@ -92,6 +96,10 @@ public class Ticket {
 
     public LocalDateTime getTicketCreationTime() {
         return ticketCreationTime;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
     }
 }
 
