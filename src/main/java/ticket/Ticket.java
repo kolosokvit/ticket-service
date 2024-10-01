@@ -14,12 +14,10 @@ public class Ticket {
     private boolean isPromo;
     private String stadiumSector;
     private double maxAllowedBackpackWeightInKg;
-    private final LocalDateTime ticketCreationTime;
+    private final LocalDateTime ticketCreationTime = LocalDateTime.now();
     private BigDecimal price;
 
     public Ticket() {
-
-        ticketCreationTime = LocalDateTime.now();
     }
 
     public Ticket(String id, String concertHall, String eventCode, long time, boolean isPromo, String stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
@@ -48,7 +46,6 @@ public class Ticket {
         DecimalFormat decimalFormat = new DecimalFormat("#.###");
         this.maxAllowedBackpackWeightInKg = Double.parseDouble(decimalFormat.format(maxAllowedBackpackWeightInKg));
         price = new BigDecimal(ticketPrice).setScale(2, RoundingMode.HALF_UP);
-        ticketCreationTime = LocalDateTime.now();
     }
 
     public Ticket(String concertHall, String eventCode, long time) {
@@ -63,7 +60,6 @@ public class Ticket {
             throw new IllegalArgumentException("Event code must contain 3 digits");
         }
         this.time = time;
-        ticketCreationTime = LocalDateTime.now();
     }
 
     public String getId() {
