@@ -10,7 +10,7 @@ public class Ticket {
     private String id;
     private String concertHall;
     private String eventCode;
-    private long time;
+    private LocalDateTime time;
     private boolean isPromo;
     private String stadiumSector;
     private double maxAllowedBackpackWeightInKg;
@@ -20,7 +20,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String id, String concertHall, String eventCode, long time, boolean isPromo, String stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
+    public Ticket(String id, String concertHall, String eventCode, LocalDateTime time, boolean isPromo, String stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
         if (id.length() > 4) {
             throw new IllegalArgumentException("ID length must be 4 or less");
         } else {
@@ -48,7 +48,7 @@ public class Ticket {
         price = new BigDecimal(ticketPrice).setScale(2, RoundingMode.HALF_UP);
     }
 
-    public Ticket(String concertHall, String eventCode, long time) {
+    public Ticket(String concertHall, String eventCode, LocalDateTime time) {
         if (concertHall.length() > 10) {
             throw new IllegalArgumentException("Concert hall must be 10 chars or less");
         } else {
@@ -74,7 +74,7 @@ public class Ticket {
         return eventCode;
     }
 
-    public long getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
