@@ -12,7 +12,7 @@ public class Ticket {
     private String eventCode;
     private LocalDateTime time;
     private boolean isPromo;
-    private String stadiumSector;
+    private StadiumSector stadiumSector;
     private double maxAllowedBackpackWeightInKg;
     private final LocalDateTime ticketCreationTime = LocalDateTime.now();
     private BigDecimal price;
@@ -20,7 +20,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String id, String concertHall, String eventCode, LocalDateTime time, boolean isPromo, String stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
+    public Ticket(String id, String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
         if (id.length() > 4) {
             throw new IllegalArgumentException("ID length must be 4 or less");
         } else {
@@ -38,11 +38,7 @@ public class Ticket {
         }
         this.time = time;
         this.isPromo = isPromo;
-        if (stadiumSector.matches("[ABC]")) {
-            this.stadiumSector = stadiumSector;
-        } else {
-            throw  new IllegalArgumentException("Stadium sector must be equal to A, B or C");
-        }
+        this.stadiumSector = stadiumSector;
         DecimalFormat decimalFormat = new DecimalFormat("#.###");
         this.maxAllowedBackpackWeightInKg = Double.parseDouble(decimalFormat.format(maxAllowedBackpackWeightInKg));
         price = new BigDecimal(ticketPrice).setScale(2, RoundingMode.HALF_UP);
@@ -82,7 +78,7 @@ public class Ticket {
         return isPromo;
     }
 
-    public String getStadiumSector() {
+    public StadiumSector getStadiumSector() {
         return stadiumSector;
     }
 
@@ -97,5 +93,6 @@ public class Ticket {
     public BigDecimal getPrice() {
         return price;
     }
+
 }
 
