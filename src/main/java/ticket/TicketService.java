@@ -6,10 +6,19 @@ import java.util.List;
 
 public class TicketService {
     private List<Ticket> ticketList = new ArrayList<>();
+
+    public Ticket getTicketById(String id) {
+        for (Ticket ticket : ticketList) {
+            if (ticket.getId().equals(id)) {
+                return ticket;
+            }
+        }
+        return null;
+    }
     
     public static void main(String[] args) {
         TicketService ticketService = new TicketService();
-        
+
         final String CONCERT_HALL = "Arena";
         final String TICKET_PRICE = "500.55";
 
@@ -34,5 +43,7 @@ public class TicketService {
         ticketService.ticketList.add(new Ticket("0010", CONCERT_HALL, "111", LocalDateTime.of(2024, 11, 15, 20, 0),
                 false, StadiumSector.A, 5.500, TICKET_PRICE));
 
+        Ticket ticket = ticketService.getTicketById("0001");
+        System.out.println("Found ticket with ID: " + ticket.getId());
     }
 }
