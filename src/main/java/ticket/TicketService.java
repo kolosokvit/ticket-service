@@ -1,5 +1,9 @@
 package ticket;
 
+import user.Admin;
+import user.Client;
+import user.User;
+
 import java.time.LocalDateTime;
 
 public class TicketService {
@@ -10,5 +14,10 @@ public class TicketService {
 
         fullTicket.share("+375291111111");
         fullTicket.share("+375291111111", "email@email.com");
+
+        User admin = new Admin();
+        User client = new Client();
+        admin.printRole();
+        client.printRole();
     }
 }
