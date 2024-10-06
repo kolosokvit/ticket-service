@@ -1,6 +1,8 @@
 package user;
 
-public class Admin extends User {
+import interfaces.Printable;
+
+public class Admin extends User implements Printable {
     @Override
     public void printRole() {
         System.out.println("User role: admin");

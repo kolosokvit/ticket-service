@@ -1,12 +1,14 @@
 package ticket;
 
+import interfaces.Printable;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Ticket {
+public class Ticket implements Printable {
 
     private String id;
     private String concertHall;
@@ -45,6 +47,11 @@ public class Ticket {
 
     public void share(String phone, String email) {
         System.out.println("Ticket is shared by phone: " + phone + " and email: " + email);
+    }
+
+    @Override
+    public void print() {
+        System.out.println(this);
     }
 
     public String getId() {
