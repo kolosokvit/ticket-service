@@ -1,5 +1,6 @@
 package ticket;
 
+import utils.ClassIdCounter;
 import interfaces.Printable;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.util.Objects;
 
 public class Ticket implements Printable {
 
+    private static final int CLASS_ID = ClassIdCounter.getClassIdCounter();
     private String id;
     private String concertHall;
     private String eventCode;
@@ -52,6 +54,10 @@ public class Ticket implements Printable {
     @Override
     public void print() {
         System.out.println(this);
+    }
+
+    public int getClassId() {
+        return CLASS_ID;
     }
 
     public String getId() {

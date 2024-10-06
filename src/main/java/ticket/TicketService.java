@@ -1,5 +1,6 @@
 package ticket;
 
+import utils.ClassIdCounter;
 import interfaces.Printable;
 import user.Admin;
 import user.Client;
@@ -8,6 +9,12 @@ import user.User;
 import java.time.LocalDateTime;
 
 public class TicketService implements Printable {
+    private static final int CLASS_ID = ClassIdCounter.getClassIdCounter();
+
+    public int getClassId() {
+        return CLASS_ID;
+    }
+
     public static void main(String[] args) {
         Ticket emptyTicket = new Ticket();
         Ticket fullTicket = new Ticket("1111", "Stadium", "111", LocalDateTime.of(2024, 11, 15, 20, 00), false, StadiumSector.A, 5.500, "500.554");
