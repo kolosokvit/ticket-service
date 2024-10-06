@@ -21,9 +21,9 @@ public class Ticket {
     }
 
     public Ticket(String id, String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
-        setId(id);
-        setConcertHall(concertHall);
-        setEventCode(eventCode);
+        this.id = id;
+        this.concertHall = concertHall;
+        this.eventCode = eventCode;
         this.time = time;
         this.isPromo = isPromo;
         this.stadiumSector = stadiumSector;
@@ -33,8 +33,8 @@ public class Ticket {
     }
 
     public Ticket(String concertHall, String eventCode, LocalDateTime time) {
-        setConcertHall(concertHall);
-        setEventCode(eventCode);
+        this.concertHall = concertHall;
+        this.eventCode = eventCode;
         this.time = time;
     }
 
@@ -74,48 +74,12 @@ public class Ticket {
         return price;
     }
 
-    public void setId(String id) {
-        if (id.length() > 4) {
-            throw new IllegalArgumentException("ID length must be 4 or less");
-        } else {
-            this.id = id;
-        }
-    }
-
-    public void setConcertHall(String concertHall) {
-        if (concertHall.length() > 10) {
-            throw new IllegalArgumentException("Concert hall must be 10 chars or less");
-        } else {
-            this.concertHall = concertHall;
-        }
-    }
-
-    public void setEventCode(String eventCode) {
-        if (eventCode.matches("\\d{3}")) {
-            this.eventCode = eventCode;
-        } else {
-            throw new IllegalArgumentException("Event code must contain 3 digits");
-        }
-    }
-
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
-    public void setPromo(boolean promo) {
-        isPromo = promo;
-    }
-
     public void setStadiumSector(StadiumSector stadiumSector) {
         this.stadiumSector = stadiumSector;
-    }
-
-    public void setMaxAllowedBackpackWeightInKg(double maxAllowedBackpackWeightInKg) {
-        this.maxAllowedBackpackWeightInKg = maxAllowedBackpackWeightInKg;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 }
 
