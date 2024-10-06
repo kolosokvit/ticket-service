@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Ticket {
 
@@ -88,6 +89,34 @@ public class Ticket {
 
     public void setStadiumSector(StadiumSector stadiumSector) {
         this.stadiumSector = stadiumSector;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return isPromo == ticket.isPromo && Double.compare(maxAllowedBackpackWeightInKg, ticket.maxAllowedBackpackWeightInKg) == 0 && Objects.equals(id, ticket.id) && Objects.equals(concertHall, ticket.concertHall) && Objects.equals(eventCode, ticket.eventCode) && Objects.equals(time, ticket.time) && stadiumSector == ticket.stadiumSector && Objects.equals(ticketCreationTime, ticket.ticketCreationTime) && Objects.equals(price, ticket.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, concertHall, eventCode, time, isPromo, stadiumSector, maxAllowedBackpackWeightInKg, ticketCreationTime, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id='" + id + '\'' +
+                ", concertHall='" + concertHall + '\'' +
+                ", eventCode='" + eventCode + '\'' +
+                ", time=" + time +
+                ", isPromo=" + isPromo +
+                ", stadiumSector=" + stadiumSector +
+                ", maxAllowedBackpackWeightInKg=" + maxAllowedBackpackWeightInKg +
+                ", ticketCreationTime=" + ticketCreationTime +
+                ", price=" + price +
+                '}';
     }
 }
 
