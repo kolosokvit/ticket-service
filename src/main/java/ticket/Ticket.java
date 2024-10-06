@@ -38,6 +38,14 @@ public class Ticket {
         this.time = time;
     }
 
+    public void share(String phone) {
+        System.out.println("Ticket is shared by phone: " + phone);
+    }
+
+    public void share(String phone, String email) {
+        System.out.println("Ticket is shared by phone: " + phone + " and email: " + email);
+    }
+
     public String getId() {
         return id;
     }
