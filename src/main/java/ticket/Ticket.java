@@ -1,6 +1,6 @@
 package ticket;
 
-import utils.ClassIdCounter;
+import utils.IdCounter;
 import interfaces.Printable;
 
 import java.math.BigDecimal;
@@ -11,8 +11,7 @@ import java.util.Objects;
 
 public class Ticket implements Printable {
 
-    private static final int CLASS_ID = ClassIdCounter.getClassIdCounter();
-    private String id;
+    private final String id = String.valueOf(IdCounter.getId());
     private String concertHall;
     private String eventCode;
     private LocalDateTime time;
@@ -25,8 +24,7 @@ public class Ticket implements Printable {
     public Ticket() {
     }
 
-    public Ticket(String id, String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
-        this.id = id;
+    public Ticket(String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.time = time;
@@ -41,10 +39,6 @@ public class Ticket implements Printable {
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.time = time;
-    }
-
-    public int getClassId() {
-        return CLASS_ID;
     }
 
     public String getId() {

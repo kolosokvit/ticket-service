@@ -1,10 +1,11 @@
 package user;
 
-import utils.ClassIdCounter;
+import utils.IdCounter;
 import interfaces.Printable;
 
 public class Admin extends User implements Printable {
-    private static final int CLASS_ID = ClassIdCounter.getClassIdCounter();
+    private final int id = IdCounter.getId();
+
     @Override
     public void printRole() {
         System.out.println("User role: admin");
@@ -15,7 +16,7 @@ public class Admin extends User implements Printable {
     }
 
     @Override
-    public int getClassId() {
-        return CLASS_ID;
+    public int getId() {
+        return id;
     }
 }
