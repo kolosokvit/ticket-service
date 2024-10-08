@@ -43,19 +43,6 @@ public class Ticket implements Printable {
         this.time = time;
     }
 
-    public void share(String phone) {
-        System.out.println("Ticket is shared by phone: " + phone);
-    }
-
-    public void share(String phone, String email) {
-        System.out.println("Ticket is shared by phone: " + phone + " and email: " + email);
-    }
-
-    @Override
-    public void print() {
-        System.out.println(this);
-    }
-
     public int getClassId() {
         return CLASS_ID;
     }
@@ -130,6 +117,19 @@ public class Ticket implements Printable {
                 ", ticketCreationTime=" + ticketCreationTime +
                 ", price=" + price +
                 '}';
+    }
+
+    public void share(String phone) {
+        System.out.println("Ticket is shared by phone: " + phone);
+    }
+
+    public void share(String phone, String email) {
+        System.out.println("Ticket is shared by phone: " + phone + " and email: " + email);
+    }
+
+    @Override
+    public void print() {
+        System.out.println(this);
     }
 }
 
