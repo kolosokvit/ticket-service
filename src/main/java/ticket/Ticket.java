@@ -1,13 +1,17 @@
 package ticket;
 
+import utils.IdCounter;
+import interfaces.Printable;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-public class Ticket {
+public class Ticket implements Printable {
 
-    private String id;
+    private final String id = String.valueOf(IdCounter.getId());
     private String concertHall;
     private String eventCode;
     private LocalDateTime time;
@@ -20,10 +24,9 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(String id, String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
-        setId(id);
-        setConcertHall(concertHall);
-        setEventCode(eventCode);
+    public Ticket(String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
+        this.concertHall = concertHall;
+        this.eventCode = eventCode;
         this.time = time;
         this.isPromo = isPromo;
         this.stadiumSector = stadiumSector;
@@ -33,8 +36,8 @@ public class Ticket {
     }
 
     public Ticket(String concertHall, String eventCode, LocalDateTime time) {
-        setConcertHall(concertHall);
-        setEventCode(eventCode);
+        this.concertHall = concertHall;
+        this.eventCode = eventCode;
         this.time = time;
     }
 
@@ -74,48 +77,53 @@ public class Ticket {
         return price;
     }
 
-    public void setId(String id) {
-        if (id.length() > 4) {
-            throw new IllegalArgumentException("ID length must be 4 or less");
-        } else {
-            this.id = id;
-        }
-    }
-
-    public void setConcertHall(String concertHall) {
-        if (concertHall.length() > 10) {
-            throw new IllegalArgumentException("Concert hall must be 10 chars or less");
-        } else {
-            this.concertHall = concertHall;
-        }
-    }
-
-    public void setEventCode(String eventCode) {
-        if (eventCode.matches("\\d{3}")) {
-            this.eventCode = eventCode;
-        } else {
-            throw new IllegalArgumentException("Event code must contain 3 digits");
-        }
-    }
-
     public void setTime(LocalDateTime time) {
         this.time = time;
-    }
-
-    public void setPromo(boolean promo) {
-        isPromo = promo;
     }
 
     public void setStadiumSector(StadiumSector stadiumSector) {
         this.stadiumSector = stadiumSector;
     }
 
-    public void setMaxAllowedBackpackWeightInKg(double maxAllowedBackpackWeightInKg) {
-        this.maxAllowedBackpackWeightInKg = maxAllowedBackpackWeightInKg;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return isPromo == ticket.isPromo && Double.compare(maxAllowedBackpackWeightInKg, ticket.maxAllowedBackpackWeightInKg) == 0 && Objects.equals(id, ticket.id) && Objects.equals(concertHall, ticket.concertHall) && Objects.equals(eventCode, ticket.eventCode) && Objects.equals(time, ticket.time) && stadiumSector == ticket.stadiumSector && Objects.equals(ticketCreationTime, ticket.ticketCreationTime) && Objects.equals(price, ticket.price);
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, concertHall, eventCode, time, isPromo, stadiumSector, maxAllowedBackpackWeightInKg, ticketCreationTime, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id='" + id + '\'' +
+                ", concertHall='" + concertHall + '\'' +
+                ", eventCode='" + eventCode + '\'' +
+                ", time=" + time +
+                ", isPromo=" + isPromo +
+                ", stadiumSector=" + stadiumSector +
+                ", maxAllowedBackpackWeightInKg=" + maxAllowedBackpackWeightInKg +
+                ", ticketCreationTime=" + ticketCreationTime +
+                ", price=" + price +
+                '}';
+    }
+
+    public void share(String phone) {
+        System.out.println("Ticket is shared by phone: " + phone);
+    }
+
+    public void share(String phone, String email) {
+        System.out.println("Ticket is shared by phone: " + phone + " and email: " + email);
+    }
+
+    @Override
+    public void print() {
+        System.out.println(this);
     }
 }
 
