@@ -70,6 +70,13 @@ public class CustomArrayList<E> {
         size--;
     }
 
+    public Object get(int index) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException(String.format("Illegal index for getting an element: %s", index));
+        }
+        return elements[index];
+    }
+
     private void checkCapacity() {
         if (nextFreeIndex + 1 > elements.length) {
             if (elements.length == 0) {
