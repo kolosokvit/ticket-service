@@ -95,7 +95,15 @@ public class Ticket implements Printable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, concertHall, eventCode, time, isPromo, stadiumSector, maxAllowedBackpackWeightInKg, ticketCreationTime, price);
+        return Objects.hash(id,
+                concertHall != null ? concertHall.hashCode() : 0,
+                eventCode != null ? eventCode.hashCode() : 0,
+                time != null ? time.hashCode() : 0,
+                isPromo,
+                stadiumSector != null ? stadiumSector.hashCode() : 0,
+                maxAllowedBackpackWeightInKg,
+                ticketCreationTime,
+                price != null ? price.hashCode() : 0);
     }
 
     @Override
