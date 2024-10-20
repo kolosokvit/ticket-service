@@ -22,6 +22,10 @@ public class CustomArrayList<E> {
         }
     }
 
+    public int getSize() {
+        return size;
+    }
+
     @Override
     public String toString() {
         if (size == 0) {
@@ -64,10 +68,6 @@ public class CustomArrayList<E> {
         }
         nextFreeIndex--;
         size--;
-    }
-
-    public int size() {
-        return size;
     }
 
     private void checkCapacity() {
