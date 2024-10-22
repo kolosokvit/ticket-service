@@ -4,7 +4,7 @@ import utils.IdCounter;
 import interfaces.Printable;
 
 public class Admin extends User implements Printable {
-    private final int id = IdCounter.getId();
+    private int id = IdCounter.getId();
 
     @Override
     public void printRole() {
