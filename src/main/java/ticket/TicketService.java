@@ -68,6 +68,6 @@ public class TicketService implements Printable {
         for (Ticket t : ticketDao.fetchTicketByUserId(user.getId())) {
             System.out.println(t);
         }
-        ticketDao.updateTicketType(1, TicketType.YEAR); // Can't figure why it doesn't work
+        ticketDao.updateTicketType(1, TicketType.YEAR);
     }
 }

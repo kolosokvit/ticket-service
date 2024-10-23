@@ -16,7 +16,7 @@ public class TicketDao {
     private static final String SAVE_TICKET = "INSERT INTO tickets (ticket_id, user_id, ticket_type, creation_date) VALUES (?, ?, ?::ticket_type, ?)";
     private static final String FETCH_TICKET_BY_ID = "SELECT ticket_id, user_id, ticket_type, creation_date FROM tickets WHERE ticket_id = ?";
     private static final String FETCH_TICKET_BY_USER_ID = "SELECT ticket_id, user_id, ticket_type, creation_date FROM tickets WHERE user_id = ?";
-    private static final String UPDATE_TICKET_TYPE = "UPDATE tickets SET ticket_type = ?::ticket_type WHERE id = ?";
+    private static final String UPDATE_TICKET_TYPE = "UPDATE tickets SET ticket_type = ?::ticket_type WHERE ticket_id = ?";
 
     public void saveTicket(Ticket ticket, int userId) {
         try {
@@ -85,6 +85,7 @@ public class TicketDao {
             preparedStatement = connection.prepareStatement(UPDATE_TICKET_TYPE);
             preparedStatement.setString(1, ticketType.name());
             preparedStatement.setInt(2, ticketId);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
