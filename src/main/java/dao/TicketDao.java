@@ -27,10 +27,10 @@ public class TicketDao {
             preparedStatement.setString(3, ticket.getTicketType().name());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(ticket.getTicketCreationTime()));
             System.out.println(preparedStatement.executeUpdate());
-            preparedStatement.close();
-            connection.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            closeResources();
         }
     }
 
@@ -45,10 +45,13 @@ public class TicketDao {
                 ticket.setId(resultSet.getInt(1));
                 ticket.setTicketType(TicketType.valueOf(resultSet.getString(3)));
                 ticket.setTime(resultSet.getTimestamp(4).toLocalDateTime());
+                resultSet.close();
                 return ticket;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            closeResources();
         }
         return null;
     }
@@ -67,9 +70,12 @@ public class TicketDao {
                 ticket.setTime(resultSet.getTimestamp(4).toLocalDateTime());
                 tickets.add(ticket);
             }
+            resultSet.close();
             return tickets;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            closeResources();
         }
     }
 
@@ -81,6 +87,17 @@ public class TicketDao {
             preparedStatement.setInt(2, ticketId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            closeResources();
+        }
+    }
+
+    private void closeResources() {
+        try {
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

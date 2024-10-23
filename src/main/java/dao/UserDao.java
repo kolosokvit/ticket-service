@@ -22,10 +22,10 @@ public class UserDao {
             preparedStatement.setString(2, user.getName());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(user.getCreationDate()));
             System.out.println(preparedStatement.executeUpdate());
-            preparedStatement.close();
-            connection.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            closeResources();
         }
     }
 
@@ -40,10 +40,13 @@ public class UserDao {
                 user.setId(resultSet.getInt(1));
                 user.setName(resultSet.getString(2));
                 user.setCreationDate(resultSet.getTimestamp(3).toLocalDateTime());
+                resultSet.close();
                 return user;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            closeResources();
         }
         return null;
     }
@@ -54,10 +57,19 @@ public class UserDao {
             preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
-            connection.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            closeResources();
+        }
+    }
+
+    private void closeResources() {
+        try {
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
