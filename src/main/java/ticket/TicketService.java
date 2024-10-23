@@ -53,10 +53,8 @@ public class TicketService implements Printable {
         TicketDao ticketDao = new TicketDao();
         UserDao userDao = new UserDao();
         Ticket ticket1 = new Ticket();
-        ticket1.setId(1);
         ticket1.setTicketType(TicketType.MONTH);
         Ticket ticket2 = new Ticket();
-        ticket2.setId(2);
         ticket2.setTicketType(TicketType.MONTH);
         User user = new User();
         user.setId(1);
