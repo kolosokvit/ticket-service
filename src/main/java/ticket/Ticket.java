@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class Ticket implements Printable {
 
-    private final String id = String.valueOf(IdCounter.getId());
+    private int id = IdCounter.getId();
     private String concertHall;
     private String eventCode;
     private LocalDateTime time;
@@ -20,11 +20,12 @@ public class Ticket implements Printable {
     private double maxAllowedBackpackWeightInKg;
     private final LocalDateTime ticketCreationTime = LocalDateTime.now();
     private BigDecimal price;
+    private TicketType ticketType;
 
     public Ticket() {
     }
 
-    public Ticket(String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice) {
+    public Ticket(String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice, TicketType ticketType) {
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.time = time;
@@ -33,6 +34,7 @@ public class Ticket implements Printable {
         DecimalFormat decimalFormat = new DecimalFormat("#.###");
         this.maxAllowedBackpackWeightInKg = Double.parseDouble(decimalFormat.format(maxAllowedBackpackWeightInKg));
         price = new BigDecimal(ticketPrice).setScale(2, RoundingMode.HALF_UP);
+        this.ticketType = ticketType;
     }
 
     public Ticket(String concertHall, String eventCode, LocalDateTime time) {
@@ -41,7 +43,7 @@ public class Ticket implements Printable {
         this.time = time;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -77,12 +79,24 @@ public class Ticket implements Printable {
         return price;
     }
 
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
     public void setStadiumSector(StadiumSector stadiumSector) {
         this.stadiumSector = stadiumSector;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
     @Override
@@ -109,7 +123,7 @@ public class Ticket implements Printable {
     @Override
     public String toString() {
         return "Ticket{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", concertHall='" + concertHall + '\'' +
                 ", eventCode='" + eventCode + '\'' +
                 ", time=" + time +
@@ -118,6 +132,7 @@ public class Ticket implements Printable {
                 ", maxAllowedBackpackWeightInKg=" + maxAllowedBackpackWeightInKg +
                 ", ticketCreationTime=" + ticketCreationTime +
                 ", price=" + price +
+                ", ticketType=" + ticketType +
                 '}';
     }
 
