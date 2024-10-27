@@ -1,13 +1,20 @@
 package user;
 
+import jakarta.persistence.*;
 import utils.IdCounter;
 import interfaces.Printable;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "users")
 public class User implements Printable {
+    @Id
+    @Column(name = "user_id", unique = true, nullable = false)
     private int id = IdCounter.getId();
+    @Column(name = "name")
     private String name;
+    @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate = LocalDateTime.now();
 
     public int getId() {

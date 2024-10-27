@@ -6,9 +6,9 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/hibernate_example</property>
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">postgres</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/my_ticket_service_db</property>
+        <property name="hibernate.connection.username">vitali</property>
+        <property name="hibernate.connection.password">1111</property>
 
         <!-- JDBC connection pool settings -->
         <property name="hibernate.c3p0.min_size">5</property>
@@ -24,6 +24,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- List of annotated classes -->
-        <mapping class="com.jfb.project.example.entity.Product"/>
+        <mapping class="user/User.java"/>
+        <mapping class="ticket/Ticket.java"/>
     </session-factory>
 </hibernate-configuration>

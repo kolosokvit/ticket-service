@@ -1,5 +1,7 @@
 package ticket;
 
+import jakarta.persistence.*;
+import user.User;
 import utils.IdCounter;
 import interfaces.Printable;
 
@@ -9,20 +11,41 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tickets")
 public class Ticket implements Printable {
-
+    @Id
+    @Column(name = "ticket_id", unique = true, nullable = false)
     private int id = IdCounter.getId();
+    @Transient
     private String concertHall;
+    @Transient
     private String eventCode;
+    @Transient
     private LocalDateTime time;
+    @Transient
     private boolean isPromo;
+    @Transient
     private StadiumSector stadiumSector;
+    @Transient
     private double maxAllowedBackpackWeightInKg;
+    @Column(name = "creation_date", nullable = false)
     private final LocalDateTime ticketCreationTime = LocalDateTime.now();
+    @Transient
     private BigDecimal price;
+    @Column(name = "ticket_type")
+    @Enumerated(EnumType.STRING)
     private TicketType ticketType;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Ticket() {
+    }
+
+    public Ticket(TicketType ticketType, User user) {
+        this.ticketType = ticketType;
+        this.user = user;
     }
 
     public Ticket(String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice, TicketType ticketType) {
@@ -83,6 +106,10 @@ public class Ticket implements Printable {
         return ticketType;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -97,6 +124,10 @@ public class Ticket implements Printable {
 
     public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -147,6 +178,15 @@ public class Ticket implements Printable {
     @Override
     public void print() {
         System.out.println(this);
+    }
+
+    public String printTicketInfo() {
+        return "Ticket{" +
+                "id=" + id +
+                ", ticketCreationTime=" + ticketCreationTime +
+                ", ticketType=" + ticketType +
+                ", user=" + user +
+                '}';
     }
 }
 
