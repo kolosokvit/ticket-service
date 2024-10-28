@@ -1,4 +1,4 @@
-package storages;
+package ticketservice.storages;
 
 import java.util.ArrayList;
 import java.util.List;

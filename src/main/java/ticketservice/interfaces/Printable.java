@@ -1,4 +1,4 @@
-package interfaces;
+package ticketservice.interfaces;
 
 public interface Printable {
     default void print() {

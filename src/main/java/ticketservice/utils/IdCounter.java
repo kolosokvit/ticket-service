@@ -1,4 +1,4 @@
-package utils;
+package ticketservice.utils;
 
 public abstract class IdCounter {
     private static int id = 0;

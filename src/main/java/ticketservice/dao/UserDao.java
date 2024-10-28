@@ -1,22 +1,26 @@
-package dao;
+package ticketservice.dao;
 
-import jdbc.CustomDataSource;
-import user.User;
+import org.springframework.stereotype.Component;
+import ticketservice.user.User;
 
+import javax.sql.DataSource;
 import java.sql.*;
 
+@Component
 public class UserDao {
-    private final CustomDataSource dataSource = CustomDataSource.getInstance();
-    private Connection connection = null;
+    private DataSource dataSource;
     private PreparedStatement preparedStatement = null;
+
+    public UserDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     private static final String SAVE_USER = "INSERT INTO users (user_id, name, creation_date) VALUES (?, ?, ?)";
     private static final String FETCH_USER_BY_ID = "SELECT user_id, name, creation_date FROM users WHERE user_id = ?";
     private static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE user_id = ?";
 
     public void saveUser(User user) {
-        try {
-            connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()) {
             preparedStatement = connection.prepareStatement(SAVE_USER);
             preparedStatement.setInt(1, user.getId());
             preparedStatement.setString(2, user.getName());
@@ -24,14 +28,11 @@ public class UserDao {
             System.out.println(preparedStatement.executeUpdate());
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            closeResources();
         }
     }
 
     public User fetchUser(int id) {
-        try {
-            connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()) {
             preparedStatement = connection.prepareStatement(FETCH_USER_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -45,31 +46,17 @@ public class UserDao {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            closeResources();
         }
         return null;
     }
 
     public void deleteUser(int id) {
-        try {
-            connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection()) {
             preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            closeResources();
-        }
-    }
-
-    private void closeResources() {
-        try {
-            preparedStatement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

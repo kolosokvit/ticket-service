@@ -1,4 +1,4 @@
-package jdbc;
+package ticketservice.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,7 +1,7 @@
-package ticket;
+package ticketservice.ticket;
 
-import utils.IdCounter;
-import interfaces.Printable;
+import ticketservice.utils.IdCounter;
+import ticketservice.interfaces.Printable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
