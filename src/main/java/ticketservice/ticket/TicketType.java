@@ -1,4 +1,4 @@
-package ticket;
+package ticketservice.ticket;
 
 public enum TicketType {
     DAY,

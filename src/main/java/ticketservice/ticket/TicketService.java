@@ -1,14 +1,17 @@
-package ticket;
+package ticketservice.ticket;
 
-import dao.TicketDao;
-import dao.UserDao;
-import storages.CustomArrayList;
-import storages.CustomHashSet;
-import utils.IdCounter;
-import interfaces.Printable;
-import user.Admin;
-import user.Client;
-import user.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ticketservice.TicketServiceApplicationContext;
+import ticketservice.dao.TicketDao;
+import ticketservice.dao.UserDao;
+import ticketservice.storages.CustomArrayList;
+import ticketservice.storages.CustomHashSet;
+import ticketservice.utils.IdCounter;
+import ticketservice.interfaces.Printable;
+import ticketservice.user.Admin;
+import ticketservice.user.Client;
+import ticketservice.user.User;
 
 import java.time.LocalDateTime;
 
@@ -50,22 +53,17 @@ public class TicketService implements Printable {
         users.delete(client);
         System.out.println(users.contain(client));
 
-        TicketDao ticketDao = new TicketDao();
-        UserDao userDao = new UserDao();
+        ApplicationContext appContext = new AnnotationConfigApplicationContext(TicketServiceApplicationContext.class);
+        TicketDao ticketDao = appContext.getBean(TicketDao.class);
+        UserDao userDao = appContext.getBean(UserDao.class);
+        User user = new User();
+        user.setName("Alex");
+        userDao.saveUser(user);
         Ticket ticket1 = new Ticket();
         ticket1.setTicketType(TicketType.MONTH);
         Ticket ticket2 = new Ticket();
-        ticket2.setTicketType(TicketType.MONTH);
-        User user = new User();
-        user.setId(1);
-        user.setName("Alex");
-        userDao.saveUser(user);
+        ticket2.setTicketType(TicketType.DAY);
         ticketDao.saveTicket(ticket1, user.getId());
         ticketDao.saveTicket(ticket2, user.getId());
-        System.out.println(ticketDao.fetchTicketById(1));
-        for (Ticket t : ticketDao.fetchTicketByUserId(user.getId())) {
-            System.out.println(t);
-        }
-        ticketDao.updateTicketType(1, TicketType.YEAR);
     }
 }

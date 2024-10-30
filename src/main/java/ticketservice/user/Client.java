@@ -1,7 +1,7 @@
-package user;
+package ticketservice.user;
 
-import utils.IdCounter;
-import interfaces.Printable;
+import ticketservice.utils.IdCounter;
+import ticketservice.interfaces.Printable;
 
 public class Client extends User implements Printable {
     private int id = IdCounter.getId();
