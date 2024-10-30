@@ -1,6 +1,6 @@
 package ticketservice.dao;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ticketservice.ticket.Ticket;
 import ticketservice.ticket.TicketType;
 
@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Repository
 public class TicketDao {
     private DataSource dataSource;
     private PreparedStatement preparedStatement = null;

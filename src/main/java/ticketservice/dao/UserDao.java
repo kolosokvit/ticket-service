@@ -1,12 +1,17 @@
 package ticketservice.dao;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ticketservice.user.User;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 
-@Component
+
+@Repository
 public class UserDao {
     private DataSource dataSource;
     private PreparedStatement preparedStatement = null;
