@@ -1,6 +1,7 @@
 package ticketservice.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ticketservice.ticket.Ticket;
 import ticketservice.ticket.TicketType;
 import ticketservice.user.User;
@@ -73,13 +74,13 @@ public class UserDao {
         }
     }
 
+    @Transactional
     public void activateUser(int id, TicketType ticketType) {
         try (Connection connection = dataSource.getConnection()) {
             Properties properties = new Properties();
             properties.load(
                     Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties"));
             if (properties.get("update_user").equals("true")) {
-            connection.setAutoCommit(false);
             User user = fetchUser(id);
             user.setUserStatus(UserStatus.ACTIVATED);
             Ticket ticket = new Ticket();
@@ -87,19 +88,13 @@ public class UserDao {
             preparedStatement = connection.prepareStatement(ACTIVATE_USER_BY_ID);
             preparedStatement.setString(1, UserStatus.ACTIVATED.name());
             preparedStatement.setInt(2, id);
-            if (preparedStatement.executeUpdate() != 1) {
-                connection.rollback();
-            } else {
-                preparedStatement = connection.prepareStatement(SAVE_TICKET_FOR_ACTIVATED_USER);
-                preparedStatement.setInt(1, ticket.getId());
-                preparedStatement.setInt(2, id);
-                preparedStatement.setString(3, ticketType.name());
-                preparedStatement.setTimestamp(4, Timestamp.valueOf(ticket.getTicketCreationTime()));
-                if (preparedStatement.executeUpdate() != 1) {
-                    connection.rollback();
-                }
-                connection.commit();
-            }
+            preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement(SAVE_TICKET_FOR_ACTIVATED_USER);
+            preparedStatement.setInt(1, ticket.getId());
+            preparedStatement.setInt(2, id);
+            preparedStatement.setString(3, ticketType.name());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(ticket.getTicketCreationTime()));
+            preparedStatement.executeUpdate();
             } else {
                 throw new RuntimeException("User activation is disabled");
             }

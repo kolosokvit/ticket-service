@@ -4,6 +4,9 @@ import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -11,6 +14,7 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan
+@EnableTransactionManagement
 public class TicketServiceApplicationContext {
     @Bean
     public DataSource dataSource() {
@@ -26,5 +30,13 @@ public class TicketServiceApplicationContext {
             e.printStackTrace();
         }
         return pgSimpleDataSource;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(dataSource());
+
+        return transactionManager;
     }
 }
