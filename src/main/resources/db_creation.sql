@@ -13,3 +13,7 @@ user_id INTEGER,
 ticket_type ticket_type,
 creation_date TIMESTAMP NOT NULL,
 FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE);
+
+CREATE TYPE user_status AS ENUM ('ACTIVATED', 'NOT_ACTIVATED');
+
+ALTER TABLE users ADD COLUMN user_status user_status;

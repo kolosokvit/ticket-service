@@ -23,7 +23,7 @@ public class CustomDataSource {
             Properties properties = new Properties();
             try {
                 properties.load(
-                        Thread.currentThread().getContextClassLoader().getResourceAsStream("db_connection.properties"));
+                        Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties"));
                 String driver = properties.getProperty("postgres.driver");
                 String url = properties.getProperty("postgres.url");
                 String password = properties.getProperty("postgres.password");

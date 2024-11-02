@@ -18,7 +18,7 @@ public class TicketServiceApplicationContext {
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
         try {
             properties.load(
-                    Thread.currentThread().getContextClassLoader().getResourceAsStream("db_connection.properties"));
+                    Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties"));
             pgSimpleDataSource.setUrl(properties.getProperty("postgres.url"));
             pgSimpleDataSource.setUser(properties.getProperty("postgres.name"));
             pgSimpleDataSource.setPassword(properties.getProperty("postgres.password"));

@@ -65,5 +65,6 @@ public class TicketService implements Printable {
         ticket2.setTicketType(TicketType.DAY);
         ticketDao.saveTicket(ticket1, user.getId());
         ticketDao.saveTicket(ticket2, user.getId());
+        userDao.activateUser(8, TicketType.YEAR);
     }
 }
