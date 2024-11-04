@@ -1,6 +1,7 @@
 package ticketservice.dao;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ticketservice.ticket.Ticket;
@@ -21,10 +22,12 @@ public class UserDao {
     @Value("${update_user}")
     private boolean userUpdateCreateEnabled;
     private DataSource dataSource;
+    private final JdbcTemplate jdbcTemplate;
     private PreparedStatement preparedStatement = null;
 
-    public UserDao(DataSource dataSource) {
+    public UserDao(DataSource dataSource, JdbcTemplate jdbcTemplate) {
         this.dataSource = dataSource;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     private static final String SAVE_USER = "INSERT INTO users (user_id, name, creation_date) VALUES (?, ?, ?)";
@@ -76,27 +79,12 @@ public class UserDao {
 
     @Transactional
     public void activateUser(int id, TicketType ticketType) {
-        try (Connection connection = dataSource.getConnection()) {
-            if (userUpdateCreateEnabled) {
-            User user = fetchUser(id);
-            user.setUserStatus(UserStatus.ACTIVATED);
+        if (userUpdateCreateEnabled) {
             Ticket ticket = new Ticket();
-            ticket.setUser(user);
-            preparedStatement = connection.prepareStatement(ACTIVATE_USER_BY_ID);
-            preparedStatement.setString(1, UserStatus.ACTIVATED.name());
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            preparedStatement = connection.prepareStatement(SAVE_TICKET_FOR_ACTIVATED_USER);
-            preparedStatement.setInt(1, ticket.getId());
-            preparedStatement.setInt(2, id);
-            preparedStatement.setString(3, ticketType.name());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(ticket.getTicketCreationTime()));
-            preparedStatement.executeUpdate();
-            } else {
-                throw new RuntimeException("User activation is disabled");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                jdbcTemplate.update(ACTIVATE_USER_BY_ID, UserStatus.ACTIVATED.name(), id);
+                jdbcTemplate.update(SAVE_TICKET_FOR_ACTIVATED_USER, ticket.getId(), id,ticketType.name(), Timestamp.valueOf(ticket.getTicketCreationTime()));
+        } else {
+            throw new RuntimeException("User activation is disabled");
         }
     }
 }
