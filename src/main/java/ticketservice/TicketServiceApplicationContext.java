@@ -1,34 +1,35 @@
 package ticketservice;
 
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
 
 @Configuration
 @ComponentScan
 @EnableTransactionManagement
+@PropertySource("classpath:application.properties")
 public class TicketServiceApplicationContext {
+    @Value("${postgres.url}")
+    private String postgresUrl;
+    @Value("${postgres.name}")
+    private String postgresName;
+    @Value("${postgres.password}")
+    private String postgresPassword;
+
     @Bean
     public DataSource dataSource() {
-        Properties properties = new Properties();
         PGSimpleDataSource pgSimpleDataSource = new PGSimpleDataSource();
-        try {
-            properties.load(
-                    Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties"));
-            pgSimpleDataSource.setUrl(properties.getProperty("postgres.url"));
-            pgSimpleDataSource.setUser(properties.getProperty("postgres.name"));
-            pgSimpleDataSource.setPassword(properties.getProperty("postgres.password"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        pgSimpleDataSource.setUrl(postgresUrl);
+        pgSimpleDataSource.setUser(postgresName);
+        pgSimpleDataSource.setPassword(postgresPassword);
         return pgSimpleDataSource;
     }
 

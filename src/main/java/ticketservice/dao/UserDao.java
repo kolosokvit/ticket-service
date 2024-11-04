@@ -1,5 +1,6 @@
 package ticketservice.dao;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ticketservice.ticket.Ticket;
@@ -8,18 +9,17 @@ import ticketservice.user.User;
 import ticketservice.user.UserStatus;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.util.LinkedHashMap;
-import java.util.Properties;
 
 
 @Repository
 public class UserDao {
+    @Value("${update_user}")
+    private boolean userUpdateCreateEnabled;
     private DataSource dataSource;
     private PreparedStatement preparedStatement = null;
 
@@ -77,10 +77,7 @@ public class UserDao {
     @Transactional
     public void activateUser(int id, TicketType ticketType) {
         try (Connection connection = dataSource.getConnection()) {
-            Properties properties = new Properties();
-            properties.load(
-                    Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties"));
-            if (properties.get("update_user").equals("true")) {
+            if (userUpdateCreateEnabled) {
             User user = fetchUser(id);
             user.setUserStatus(UserStatus.ACTIVATED);
             Ticket ticket = new Ticket();
@@ -99,8 +96,6 @@ public class UserDao {
                 throw new RuntimeException("User activation is disabled");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
