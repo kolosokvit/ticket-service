@@ -1,5 +1,6 @@
 package ticketservice.ticket;
 
+import ticketservice.user.User;
 import ticketservice.utils.IdCounter;
 import ticketservice.interfaces.Printable;
 
@@ -21,6 +22,7 @@ public class Ticket implements Printable {
     private final LocalDateTime ticketCreationTime = LocalDateTime.now();
     private BigDecimal price;
     private TicketType ticketType;
+    private User user;
 
     public Ticket() {
     }
@@ -83,6 +85,10 @@ public class Ticket implements Printable {
         return ticketType;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -97,6 +103,10 @@ public class Ticket implements Printable {
 
     public void setTicketType(TicketType ticketType) {
         this.ticketType = ticketType;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
