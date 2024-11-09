@@ -1,17 +1,25 @@
-package ticketservice.user;
+package ticketservice.model;
 
-import ticketservice.ticket.Ticket;
-import ticketservice.utils.IdCounter;
+import jakarta.persistence.*;
 import ticketservice.interfaces.Printable;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
 public class User implements Printable {
-    private int id = IdCounter.getId();
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate = LocalDateTime.now();
+    @Column(name = "user_status")
     private UserStatus userStatus;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ticket> tickets;
 
     public int getId() {

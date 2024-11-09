@@ -1,7 +1,6 @@
-package ticketservice.ticket;
+package ticketservice.model;
 
-import ticketservice.user.User;
-import ticketservice.utils.IdCounter;
+import jakarta.persistence.*;
 import ticketservice.interfaces.Printable;
 
 import java.math.BigDecimal;
@@ -10,18 +9,34 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tickets")
 public class Ticket implements Printable {
-
-    private int id = IdCounter.getId();
+    @Id
+    @Column(name = "ticket_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Transient
     private String concertHall;
+    @Transient
     private String eventCode;
+    @Transient
     private LocalDateTime time;
+    @Transient
     private boolean isPromo;
+    @Transient
     private StadiumSector stadiumSector;
+    @Transient
     private double maxAllowedBackpackWeightInKg;
+    @Column(name = "creation_date", nullable = false)
     private final LocalDateTime ticketCreationTime = LocalDateTime.now();
+    @Transient
     private BigDecimal price;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ticket_type", nullable = false)
     private TicketType ticketType;
+    @ManyToOne
+    @JoinColumn(name="user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
     public Ticket() {
