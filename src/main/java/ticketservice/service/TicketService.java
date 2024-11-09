@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class TicketService {
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
 
     public TicketService(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
@@ -20,8 +20,13 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
-    public Optional<Ticket> getTicket(int id) {
-        return ticketRepository.findById(id);
+    public Ticket getTicket(int id) {
+        Optional<Ticket> result = ticketRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new IllegalArgumentException("Can't find ticket with id: + id");
+        }
     }
 
     public void deleteTicket(int id) {

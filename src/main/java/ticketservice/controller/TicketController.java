@@ -7,9 +7,10 @@ import ticketservice.model.Ticket;
 import ticketservice.service.TicketService;
 
 
+
 @RestController
 public class TicketController {
-    private TicketService ticketService;
+    private final TicketService ticketService;
 
     public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
@@ -17,6 +18,6 @@ public class TicketController {
 
     @GetMapping("/tickets/{id}")
     Ticket getTicketById(@PathVariable int id) {
-        return ticketService.getTicket(id).orElseThrow(() -> new IllegalArgumentException("Can't find ticket with id: " + id));
+        return ticketService.getTicket(id);
     }
 }
