@@ -1,4 +1,4 @@
-package ticketservice.user;
+package ticketservice.model;
 
 public enum UserStatus {
     ACTIVATED,
