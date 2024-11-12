@@ -9,8 +9,9 @@ import ticketservice.model.UserStatus;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
-    @Modifying
-    @Query(value = "UPDATE users SET user_status = ?1::user_status WHERE user_id = ?2", nativeQuery = true)
-    int updateUserStatus(UserStatus userStatus, int id);
-
+  @Modifying
+  @Query(
+      value = "UPDATE users SET user_status = ?1::user_status WHERE user_id = ?2",
+      nativeQuery = true)
+  int updateUserStatus(UserStatus userStatus, int id);
 }
