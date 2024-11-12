@@ -26,11 +26,11 @@ class TicketServiceTest {
 
   @Test
   void Should_SaveTicket_When_CallSaveTicket() {
-    Ticket actualTicket = new Ticket();
-    Mockito.when(ticketRepository.save(actualTicket)).thenReturn(actualTicket);
-    Ticket resultTicket = ticketService.saveTicket(actualTicket);
-    assertEquals(actualTicket, resultTicket);
-    verify(ticketRepository, times(1)).save(actualTicket);
+    Ticket expectedTicket = new Ticket();
+    Mockito.when(ticketRepository.save(expectedTicket)).thenReturn(expectedTicket);
+    Ticket actualTicket = ticketService.saveTicket(expectedTicket);
+    assertEquals(expectedTicket, actualTicket);
+    verify(ticketRepository, times(1)).save(expectedTicket);
   }
 
   @Test
@@ -42,11 +42,11 @@ class TicketServiceTest {
 
   @Test
   void Should_ReturnOptionalWithTicket_When_CallGetTicket() {
-    Ticket actualTicket = new Ticket();
-    int id = actualTicket.getId();
-    Mockito.when(ticketRepository.findById(id)).thenReturn(Optional.of(actualTicket));
-    Ticket resultTicket = ticketService.getTicket(id);
-    assertEquals(actualTicket, resultTicket);
+    Ticket expectedTicket = new Ticket();
+    int id = expectedTicket.getId();
+    Mockito.when(ticketRepository.findById(id)).thenReturn(Optional.of(expectedTicket));
+    Ticket actualTicket = ticketService.getTicket(id);
+    assertEquals(expectedTicket, actualTicket);
     verify(ticketRepository, times(1)).findById(id);
   }
 
