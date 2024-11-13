@@ -1,177 +1,202 @@
 package ticketservice.model;
 
 import jakarta.persistence.*;
-import ticketservice.interfaces.Printable;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import ticketservice.interfaces.Printable;
 
 @Entity
 @Table(name = "tickets")
 public class Ticket implements Printable {
-    @Id
-    @Column(name = "ticket_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Transient
-    private String concertHall;
-    @Transient
-    private String eventCode;
-    @Transient
-    private LocalDateTime time;
-    @Transient
-    private boolean isPromo;
-    @Transient
-    private StadiumSector stadiumSector;
-    @Transient
-    private double maxAllowedBackpackWeightInKg;
-    @Column(name = "creation_date", nullable = false)
-    private final LocalDateTime ticketCreationTime = LocalDateTime.now();
-    @Transient
-    private BigDecimal price;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "ticket_type", nullable = false)
-    private TicketType ticketType;
-    @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "user_id", nullable = false)
-    private User user;
+  @Id
+  @Column(name = "ticket_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    public Ticket() {
-    }
+  @Transient private String concertHall;
+  @Transient private String eventCode;
+  @Transient private LocalDateTime time;
+  @Transient private boolean isPromo;
+  @Transient private StadiumSector stadiumSector;
+  @Transient private double maxAllowedBackpackWeightInKg;
 
-    public Ticket(String concertHall, String eventCode, LocalDateTime time, boolean isPromo, StadiumSector stadiumSector, double maxAllowedBackpackWeightInKg, String ticketPrice, TicketType ticketType) {
-        this.concertHall = concertHall;
-        this.eventCode = eventCode;
-        this.time = time;
-        this.isPromo = isPromo;
-        this.stadiumSector = stadiumSector;
-        DecimalFormat decimalFormat = new DecimalFormat("#.###");
-        this.maxAllowedBackpackWeightInKg = Double.parseDouble(decimalFormat.format(maxAllowedBackpackWeightInKg));
-        price = new BigDecimal(ticketPrice).setScale(2, RoundingMode.HALF_UP);
-        this.ticketType = ticketType;
-    }
+  @Column(name = "creation_date", nullable = false)
+  private final LocalDateTime ticketCreationTime = LocalDateTime.now();
 
-    public Ticket(String concertHall, String eventCode, LocalDateTime time) {
-        this.concertHall = concertHall;
-        this.eventCode = eventCode;
-        this.time = time;
-    }
+  @Transient private BigDecimal price;
 
-    public int getId() {
-        return id;
-    }
+  @Enumerated(EnumType.STRING)
+  @Column(name = "ticket_type", nullable = false)
+  private TicketType ticketType;
 
-    public String getConcertHall() {
-        return concertHall;
-    }
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+  private User user;
 
-    public String getEventCode() {
-        return eventCode;
-    }
+  public Ticket() {}
 
-    public LocalDateTime getTime() {
-        return time;
-    }
+  public Ticket(
+      String concertHall,
+      String eventCode,
+      LocalDateTime time,
+      boolean isPromo,
+      StadiumSector stadiumSector,
+      double maxAllowedBackpackWeightInKg,
+      String ticketPrice,
+      TicketType ticketType) {
+    this.concertHall = concertHall;
+    this.eventCode = eventCode;
+    this.time = time;
+    this.isPromo = isPromo;
+    this.stadiumSector = stadiumSector;
+    DecimalFormat decimalFormat = new DecimalFormat("#.###");
+    this.maxAllowedBackpackWeightInKg =
+        Double.parseDouble(decimalFormat.format(maxAllowedBackpackWeightInKg));
+    price = new BigDecimal(ticketPrice).setScale(2, RoundingMode.HALF_UP);
+    this.ticketType = ticketType;
+  }
 
-    public boolean isPromo() {
-        return isPromo;
-    }
+  public Ticket(String concertHall, String eventCode, LocalDateTime time) {
+    this.concertHall = concertHall;
+    this.eventCode = eventCode;
+    this.time = time;
+  }
 
-    public StadiumSector getStadiumSector() {
-        return stadiumSector;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public double getMaxAllowedBackpackWeightInKg() {
-        return maxAllowedBackpackWeightInKg;
-    }
+  public String getConcertHall() {
+    return concertHall;
+  }
 
-    public LocalDateTime getTicketCreationTime() {
-        return ticketCreationTime;
-    }
+  public String getEventCode() {
+    return eventCode;
+  }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+  public LocalDateTime getTime() {
+    return time;
+  }
 
-    public TicketType getTicketType() {
-        return ticketType;
-    }
+  public boolean isPromo() {
+    return isPromo;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  public StadiumSector getStadiumSector() {
+    return stadiumSector;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public double getMaxAllowedBackpackWeightInKg() {
+    return maxAllowedBackpackWeightInKg;
+  }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
+  public LocalDateTime getTicketCreationTime() {
+    return ticketCreationTime;
+  }
 
-    public void setStadiumSector(StadiumSector stadiumSector) {
-        this.stadiumSector = stadiumSector;
-    }
+  public BigDecimal getPrice() {
+    return price;
+  }
 
-    public void setTicketType(TicketType ticketType) {
-        this.ticketType = ticketType;
-    }
+  public TicketType getTicketType() {
+    return ticketType;
+  }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ticket ticket = (Ticket) o;
-        return isPromo == ticket.isPromo && Double.compare(maxAllowedBackpackWeightInKg, ticket.maxAllowedBackpackWeightInKg) == 0 && Objects.equals(id, ticket.id) && Objects.equals(concertHall, ticket.concertHall) && Objects.equals(eventCode, ticket.eventCode) && Objects.equals(time, ticket.time) && stadiumSector == ticket.stadiumSector && Objects.equals(ticketCreationTime, ticket.ticketCreationTime) && Objects.equals(price, ticket.price);
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id,
-                concertHall != null ? concertHall.hashCode() : 0,
-                eventCode != null ? eventCode.hashCode() : 0,
-                time != null ? time.hashCode() : 0,
-                isPromo,
-                stadiumSector != null ? stadiumSector.hashCode() : 0,
-                maxAllowedBackpackWeightInKg,
-                ticketCreationTime,
-                price != null ? price.hashCode() : 0);
-    }
+  public void setTime(LocalDateTime time) {
+    this.time = time;
+  }
 
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", concertHall='" + concertHall + '\'' +
-                ", eventCode='" + eventCode + '\'' +
-                ", time=" + time +
-                ", isPromo=" + isPromo +
-                ", stadiumSector=" + stadiumSector +
-                ", maxAllowedBackpackWeightInKg=" + maxAllowedBackpackWeightInKg +
-                ", ticketCreationTime=" + ticketCreationTime +
-                ", price=" + price +
-                ", ticketType=" + ticketType +
-                '}';
-    }
+  public void setStadiumSector(StadiumSector stadiumSector) {
+    this.stadiumSector = stadiumSector;
+  }
 
-    public void share(String phone) {
-        System.out.println("Ticket is shared by phone: " + phone);
-    }
+  public void setTicketType(TicketType ticketType) {
+    this.ticketType = ticketType;
+  }
 
-    public void share(String phone, String email) {
-        System.out.println("Ticket is shared by phone: " + phone + " and email: " + email);
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    @Override
-    public void print() {
-        System.out.println(this);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Ticket ticket = (Ticket) o;
+    return isPromo == ticket.isPromo
+        && Double.compare(maxAllowedBackpackWeightInKg, ticket.maxAllowedBackpackWeightInKg) == 0
+        && Objects.equals(id, ticket.id)
+        && Objects.equals(concertHall, ticket.concertHall)
+        && Objects.equals(eventCode, ticket.eventCode)
+        && Objects.equals(time, ticket.time)
+        && stadiumSector == ticket.stadiumSector
+        && Objects.equals(ticketCreationTime, ticket.ticketCreationTime)
+        && Objects.equals(price, ticket.price);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        id,
+        concertHall != null ? concertHall.hashCode() : 0,
+        eventCode != null ? eventCode.hashCode() : 0,
+        time != null ? time.hashCode() : 0,
+        isPromo,
+        stadiumSector != null ? stadiumSector.hashCode() : 0,
+        maxAllowedBackpackWeightInKg,
+        ticketCreationTime,
+        price != null ? price.hashCode() : 0);
+  }
+
+  @Override
+  public String toString() {
+    return "Ticket{"
+        + "id="
+        + id
+        + ", concertHall='"
+        + concertHall
+        + '\''
+        + ", eventCode='"
+        + eventCode
+        + '\''
+        + ", time="
+        + time
+        + ", isPromo="
+        + isPromo
+        + ", stadiumSector="
+        + stadiumSector
+        + ", maxAllowedBackpackWeightInKg="
+        + maxAllowedBackpackWeightInKg
+        + ", ticketCreationTime="
+        + ticketCreationTime
+        + ", price="
+        + price
+        + ", ticketType="
+        + ticketType
+        + '}';
+  }
+
+  public void share(String phone) {
+    System.out.println("Ticket is shared by phone: " + phone);
+  }
+
+  public void share(String phone, String email) {
+    System.out.println("Ticket is shared by phone: " + phone + " and email: " + email);
+  }
+
+  @Override
+  public void print() {
+    System.out.println(this);
+  }
 }
-

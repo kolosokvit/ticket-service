@@ -1,4 +1,3 @@
 package ticketservice.config;
 
-public class ThisIsMyFirstConditionalBean {
-}
+public class ThisIsMyFirstConditionalBean {}

@@ -6,10 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CustomConfiguration {
-    @Bean
-    @ConditionalOnProperty(name = "enableConditionalBean", havingValue = "true")
-    public ThisIsMyFirstConditionalBean thisIsMyFirstConditionalBean() {
-        return new ThisIsMyFirstConditionalBean();
-    }
-
+  @Bean
+  @ConditionalOnProperty(name = "enableConditionalBean", havingValue = "true")
+  public ThisIsMyFirstConditionalBean thisIsMyFirstConditionalBean() {
+    return new ThisIsMyFirstConditionalBean();
+  }
 }
